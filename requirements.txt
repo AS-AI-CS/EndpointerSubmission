@@ -1,0 +1,9 @@
+flask
+flask_sqlalchemy
+flasgger
+flask_jwt_extended
+flask_bcrypt
+datetime
+sqlalchemy
+requests
+email_validator

@@ -1,0 +1,346 @@
+"""
+app.config['SWAGGER'] = {
+    'title': 'Symptom Tracking API',
+    'uiversion': 3,
+    'securityDefinitions': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer {token}"'
+        }
+    }
+}
+"""
+   
+   
+   
+   
+    """
+    An endpoint that is used to register a new user.
+    ---
+    tags:
+        - Auth
+    parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+                - username
+                - password
+                - email
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+                email:
+                    type: string
+    responses:
+        201:
+            description: User registered successfully.
+            schema:
+                type: object
+                properties:
+                    message:
+                        type: string
+        400:
+            description: User already exists or missing fields.
+            schema:
+                type: object
+                properties:
+                    message:
+                        type: string
+    """
+
+    
+
+        """
+    Endpoint to update the number of tokens for the user.
+    ---
+    tags:
+        - Auth
+    security:
+        - Bearer: []
+    parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+                - tokens
+            properties:
+                tokens:
+                    type: integer
+    responses:
+        200:
+            description: Tokens updated successfully.
+            schema:
+                type: object
+                properties:
+                    message:
+                        type: string
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    message:
+                        type: string
+    """
+
+
+        """
+    User login endpoint.
+    ---
+    tags:
+        - Auth
+    parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+                - username
+                - password
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+    responses:
+        200:
+            description: Login successful, returns access token.
+            schema:
+                type: string
+        400:
+            description: Missing username or password.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        401:
+            description: Invalid username or password.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+
+        """
+    Endpoint to delete the current user.
+    ---
+    tags:
+        - Auth
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: User deleted successfully.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+
+        """
+    Get the latest symptoms for the current user.
+    ---
+    tags:
+        - Symptoms
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: Symptoms retrieved successfully.
+            schema:
+                type: array
+                items:
+                    type: integer
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+
+
+     """
+    Add symptoms for the current user.
+    ---
+    tags:
+        - Symptoms
+    security:
+        - Bearer: []
+    parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+                - symptoms
+            properties:
+                symptoms:
+                    type: array
+                    items:
+                        type: integer
+    responses:
+        201:
+            description: Symptoms added successfully.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        400:
+            description: No symptoms provided.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+        """
+    Predict the user's condition based on their latest symptoms.
+    ---
+    tags:
+        - Symptoms
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: Prediction made successfully.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        404:
+            description: User not found or no symptoms found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+        400:
+            description: No symptoms provided.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+
+        """
+    Get the latest prediction result for the current user.
+    ---
+    tags:
+        - Symptoms
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: Latest prediction retrieved successfully.
+            schema:
+                type: object
+                properties:
+                    id:
+                        type: integer
+                    user_id:
+                        type: integer
+                    datetime:
+                        type: string
+                        format: date-time
+                    result:
+                        type: string
+        404:
+            description: User not found or no predictions found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """
+
+
+        """
+    Get the current user's information: username, id, tokens, and email.
+    ---
+    tags:
+        - Auth
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: User information has been successfully retrieved.
+            schema:
+                type: object
+                properties:
+                    id:
+                        type: integer
+                    username:
+                        type: string
+                    email:
+                        type: string
+                    tokens:
+                        type: integer
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string"""
+
+
+                            """
+    Get all symptoms for the current user.
+    ---
+    tags:
+        - Symptoms
+    security:
+        - Bearer: []
+    responses:
+        200:
+            description: All symptoms retrieved successfully.
+            schema:
+                type: array
+                items:
+                    type: integer
+        404:
+            description: User not found.
+            schema:
+                type: object
+                properties:
+                    msg:
+                        type: string
+    """

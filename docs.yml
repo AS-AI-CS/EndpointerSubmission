@@ -1,0 +1,486 @@
+definitions: {}
+info:
+  description: This API provides endpoints for health tracking, including user authentication, symptom management, mental health logging, and illness prediction (using an external model).
+  termsOfService: INSERT URL
+  title: HealthTrackAI API
+  version: 0.0.1
+paths:
+  /protected/mentalHealth/add:
+    post:
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              mental_health_notes:
+                type: string
+            required:
+              - mental_health_notes
+            type: object
+      responses:
+        '201':
+          description: Notes added successfully.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '400':
+          description: No mental health notes entered.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Add mental health notes for the current user.
+      tags:
+        - Mental Health
+  /protected/mentalHealth/get/all:
+    get:
+      responses:
+        '200':
+          description: All mental health notes retrieved successfully.
+          schema:
+            items:
+              properties:
+                datetime:
+                  format: date-time
+                  type: string
+                id:
+                  type: integer
+                mental_health_notes:
+                  type: string
+                user_id:
+                  type: integer
+              type: object
+            type: array
+        '404':
+          description: User not found or no mental health notes found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get all mental health notes for the current user.
+      tags:
+        - Mental Health
+  /protected/mentalHealth/get/latest:
+    get:
+      responses:
+        '200':
+          description: Latest mental health notes retrieved successfully.
+          schema:
+            properties:
+              datetime:
+                format: date-time
+                type: string
+              id:
+                type: integer
+              mental_health_notes:
+                type: string
+              user_id:
+                type: integer
+            type: object
+        '404':
+          description: User not found or no mental health notes found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get the latest mental health notes for the current user.
+      tags:
+        - Mental Health
+  /protected/predict1:
+    post:
+      responses:
+        '200':
+          description: Prediction made successfully.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '400':
+          description: No symptoms provided.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '404':
+          description: User not found or no symptoms found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Predict the user's condition based on their latest symptoms.
+      tags:
+        - Symptoms
+  /protected/predict1/get/all:
+    get:
+      responses:
+        '200':
+          description: All predictions retrieved successfully.
+          schema:
+            items:
+              properties:
+                datetime:
+                  format: date-time
+                  type: string
+                id:
+                  type: integer
+                result:
+                  type: string
+                user_id:
+                  type: integer
+              type: object
+            type: array
+        '404':
+          description: User not found or no predictions found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get all prediction results for the current user.
+      tags:
+        - Symptoms
+  /protected/predict1/get/latest:
+    get:
+      responses:
+        '200':
+          description: Latest prediction retrieved successfully.
+          schema:
+            properties:
+              datetime:
+                format: date-time
+                type: string
+              id:
+                type: integer
+              result:
+                type: string
+              user_id:
+                type: integer
+            type: object
+        '404':
+          description: User not found or no predictions found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get the latest prediction result for the current user.
+      tags:
+        - Symptoms
+  /protected/symptoms/add:
+    post:
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              symptoms:
+                items:
+                  type: integer
+                type: array
+            required:
+              - symptoms
+            type: object
+      responses:
+        '201':
+          description: Symptoms added successfully.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '400':
+          description: No symptoms provided.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Add symptoms for the current user.
+      tags:
+        - Symptoms
+  /protected/symptoms/get/all:
+    get:
+      responses:
+        '200':
+          description: All symptoms retrieved successfully.
+          schema:
+            items:
+              type: integer
+            type: array
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get all symptoms for the current user.
+      tags:
+        - Symptoms
+  /protected/symptoms/get/latest:
+    get:
+      responses:
+        '200':
+          description: Symptoms retrieved successfully.
+          schema:
+            items:
+              type: integer
+            type: array
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Get the latest symptoms for the current user.
+      tags:
+        - Symptoms
+  /protected/user/get/data/basic:
+    get:
+      responses:
+        '200':
+          description: User information has been successfully retrieved!
+          schema:
+            properties:
+              email:
+                type: string
+              id:
+                type: integer
+              tokens:
+                type: integer
+              username:
+                type: string
+            type: object
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: 'Get the current user''s information: username, id, tokens, and email.'
+      tags:
+        - Authentication
+  /protected/utokens:
+    put:
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              tokens:
+                type: integer
+            required:
+              - tokens
+            type: object
+      responses:
+        '200':
+          description: Tokens updated successfully!
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Endpoint to update the number of tokens for the user.
+      tags:
+        - Authentication
+  /test:
+    get:
+      responses:
+        '200':
+          description: Test endpoint is working.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      summary: Test endpoint to check if the API is working.
+      tags:
+        - Test
+  /time:
+    get:
+      responses:
+        '200':
+          description: Current time in UTC.
+          schema:
+            properties:
+              current_time:
+                format: date-time
+                type: string
+            type: object
+      summary: Get the current time in UTC.
+      tags:
+        - Time
+  /time/eastern:
+    get:
+      responses:
+        '200':
+          description: Current time in the Eastern Time Zone.
+          schema:
+            properties:
+              current_time:
+                format: date-time
+                type: string
+            type: object
+      summary: Get the current time in the Eastern Time Zone.
+      tags:
+        - Time
+  /user/delete:
+    delete:
+      responses:
+        '200':
+          description: User deleted successfully.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '404':
+          description: User not found.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      security:
+        - Bearer: []
+      summary: Endpoint to delete the current user.
+      tags:
+        - Authentication
+  /user/login:
+    post:
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              password:
+                type: string
+              username:
+                type: string
+            required:
+              - username
+              - password
+            type: object
+      responses:
+        '200':
+          description: Login successful, return access token.
+          schema:
+            type: string
+        '400':
+          description: Missing username or password.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+        '401':
+          description: Invalid username or password.
+          schema:
+            properties:
+              msg:
+                type: string
+            type: object
+      summary: User login endpoint.
+      tags:
+        - Authentication
+  /user/register:
+    post:
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              username:
+                type: string
+            required:
+              - username
+              - password
+              - email
+            type: object
+      responses:
+        '201':
+          description: User registered successfully!
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+        '400':
+          description: User already exists or missing fields in input.
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
+      summary: An endpoint that is used to register a new user.
+      tags:
+        - Authentication
+securityDefinitions:
+  Bearer:
+    description: 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer {token}"'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: '2.0'
